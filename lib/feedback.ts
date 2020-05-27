@@ -1,11 +1,11 @@
 import * as html2canvas from 'html2canvas';
 
 export interface FeedbackOptions {
-  classes: { [key: string]: string; };
+  classes?: { [key: string]: string; };
   backgroundOpacity?: number;
   allowedTags?: string[];
   endpoint: string;
-  texts: { [key: string]: string; };
+  texts?: { [key: string]: string; };
 }
 
 export interface HTML2CanvasOptions {
@@ -80,7 +80,7 @@ export class Feedback {
       prefix: 'fb-',
       button: 'mat-button',
       buttonPrimary: 'primary',
-      buttonDefault: '',
+      buttonDefault: 'btn',
     },
     texts: {
       describe: '描述你的问题，分享你的想法...',
@@ -330,22 +330,22 @@ export class Feedback {
   }
 
   private _createHeader(): HTMLDivElement {
-    const header = document.createElement('div');
+    let header = document.createElement('div');
     header.className = `${this._options.classes.prefix}header`;
 
-    const headerH1 = document.createElement('h1');
+    let headerH1 = document.createElement('h1');
     headerH1.innerText = this._options.texts.title;
     header.appendChild(headerH1);
     return header;
   }
 
   private _createForm(): HTMLDivElement {
-    const container = document.createElement('div');
+    let container = document.createElement('div');
     container.className = `${this._options.classes.prefix}form-container`;
     container.setAttribute('data-html2canvas-ignore', 'true');
     this._formContainer = container;
 
-    const form = document.createElement('form');
+    let form = document.createElement('form');
     form.appendChild(this._createHeader());
     form.appendChild(this._createTextarea());
     form.appendChild(this._createCheckboxContainer());
@@ -362,7 +362,7 @@ export class Feedback {
   }
 
   private _createCanvas(): HTMLCanvasElement {
-    const canvas = document.createElement('canvas');
+    let canvas = document.createElement('canvas');
     canvas.width = document.documentElement.scrollWidth;
     canvas.height = document.documentElement.scrollHeight;
     canvas.className = 'draw-area';
@@ -387,35 +387,35 @@ export class Feedback {
   }
 
   private _createTextarea(): HTMLTextAreaElement {
-    const textarea = document.createElement('textarea');
+    let textarea = document.createElement('textarea');
     textarea.placeholder = this._options.texts.describe;
     return textarea;
   }
 
   private _createCheckboxContainer(): HTMLDivElement {
-    const checkboxContainer = document.createElement('div');
+    let checkboxContainer = document.createElement('div');
     checkboxContainer.className = `${this._options.classes.prefix}checkbox`;
 
-    const checkboxLabel = document.createElement('label');
+    let checkboxLabel = document.createElement('label');
     checkboxLabel.addEventListener('click', this._toggleScreenshot);
     checkboxLabel.htmlFor = 'screenshot';
 
-    const checkbox = document.createElement('input');
+    let checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.id = 'screenshot';
     checkbox.checked = this._state.includeScreenshot;
     this._checkbox = checkbox;
     checkboxLabel.appendChild(checkbox);
 
-    const checkboxSvgContainer = document.createElement('div');
-    const checkboxSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    let checkboxSvgContainer = document.createElement('div');
+    let checkboxSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     checkboxSvg.setAttributeNS(null, 'fill', this._state.includeScreenshot ? this._checkedColor : this._uncheckedColor);
     checkboxSvg.setAttributeNS(null, 'width', '24px');
     checkboxSvg.setAttributeNS(null, 'height', '24px');
     checkboxSvg.setAttributeNS(null, 'viewBox', '0 0 24 24');
     this._checkboxSvg = checkboxSvg;
 
-    const checkboxSvgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    let checkboxSvgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     checkboxSvgPath.setAttributeNS(null, 'd', this._state.includeScreenshot ? this._checkedPath : this._uncheckedPath);
     this._checkboxSvgPath = checkboxSvgPath;
 
@@ -423,7 +423,7 @@ export class Feedback {
     checkboxSvgContainer.appendChild(checkboxSvg);
     checkboxLabel.appendChild(checkboxSvgContainer);
 
-    const checkboxLabelSpan = document.createElement('span');
+    let checkboxLabelSpan = document.createElement('span');
     checkboxLabelSpan.innerText = this._options.texts.screenshot;
     checkboxLabel.appendChild(checkboxLabelSpan);
 
@@ -432,7 +432,7 @@ export class Feedback {
   }
 
   private _createScreenshotContainer(): HTMLDivElement {
-    const screenshotContainer = document.createElement('div');
+    let screenshotContainer = document.createElement('div');
     screenshotContainer.className = `${this._options.classes.prefix}screenshot`;
     screenshotContainer.addEventListener('click', this._openDrawer);
     this._screenshotContainer = screenshotContainer;
@@ -440,21 +440,21 @@ export class Feedback {
   }
 
   private _createFootnote(): HTMLElement {
-    const footnote = document.createElement('small');
+    let footnote = document.createElement('small');
     footnote.innerText = this._options.texts.footnote;
     this._footnoteContainer = footnote;
     return footnote;
   }
 
   private _createActionsContainer(): HTMLDivElement {
-    const actions = document.createElement('div');
+    let actions = document.createElement('div');
     actions.className = `${this._options.classes.prefix}actions`;
 
-    const sendButtonContainer = document.createElement('div');
+    let sendButtonContainer = document.createElement('div');
     sendButtonContainer.classList.add(this._options.classes.button);
     sendButtonContainer.classList.add(this._options.classes.buttonPrimary);
 
-    const sendButton = document.createElement('button');
+    let sendButton = document.createElement('button');
     sendButton.innerText = this._options.texts.send;
     sendButton.type = 'submit';
     sendButton.addEventListener('click', ($event) => {
@@ -464,10 +464,10 @@ export class Feedback {
     sendButtonContainer.appendChild(sendButton);
     actions.appendChild(sendButtonContainer);
 
-    const cancelButtonContainer = document.createElement('div');
+    let cancelButtonContainer = document.createElement('div');
     cancelButtonContainer.classList.add(this._options.classes.button);
 
-    const cancelButton = document.createElement('button');
+    let cancelButton = document.createElement('button');
     cancelButton.innerText = this._options.texts.cancel;
     cancelButton.type = 'button';
     cancelButton.addEventListener('click', this.close);
@@ -477,10 +477,10 @@ export class Feedback {
   }
 
   private _createDrawOptions(): HTMLDivElement {
-    const drawOptions = document.createElement('div');
+    let drawOptions = document.createElement('div');
     drawOptions.className = `${this._options.classes.prefix}draw-options`;
 
-    const draggerContainer = document.createElement('div');
+    let draggerContainer = document.createElement('div');
     draggerContainer.className = 'dragger';
     draggerContainer.innerText = this._options.texts.dragger;
 
@@ -491,8 +491,8 @@ export class Feedback {
     this._dragger = draggerContainer;
     drawOptions.appendChild(draggerContainer);
 
-    const highlightButtonContainer = document.createElement('div');
-    const highlightButton = document.createElement('button');
+    let highlightButtonContainer = document.createElement('div');
+    let highlightButton = document.createElement('button');
     highlightButton.innerText = this._options.texts.highlight;
     highlightButton.type = 'button';
     highlightButton.classList.add(this._options.classes.button)
@@ -501,8 +501,8 @@ export class Feedback {
     highlightButtonContainer.appendChild(highlightButton);
     drawOptions.appendChild(highlightButtonContainer);
 
-    const blackoutButtonContainer = document.createElement('div');
-    const blackoutButton = document.createElement('button');
+    let blackoutButtonContainer = document.createElement('div');
+    let blackoutButton = document.createElement('button');
     blackoutButton.innerText = this._options.texts.blackout;
     blackoutButton.type = 'button';
     blackoutButton.classList.add(this._options.classes.button)
@@ -511,9 +511,9 @@ export class Feedback {
     blackoutButtonContainer.appendChild(blackoutButton);
     drawOptions.appendChild(blackoutButtonContainer);
 
-    const doneButtonContainer = document.createElement('div');
+    let doneButtonContainer = document.createElement('div');
 
-    const doneButton = document.createElement('button');
+    let doneButton = document.createElement('button');
     doneButton.innerText = this._options.texts.done;
     doneButton.type = 'button';
     doneButton.classList.add(this._options.classes.button)
@@ -528,7 +528,7 @@ export class Feedback {
   }
 
   private _createHelpersContainer(): HTMLDivElement {
-    const helpersContainer = document.createElement('div');
+    let helpersContainer = document.createElement('div');
     helpersContainer.className = 'helpers';
     helpersContainer.style.width = `${document.documentElement.scrollWidth}px`;
     helpersContainer.style.height = `${document.documentElement.scrollHeight}px`;
@@ -610,7 +610,7 @@ export class Feedback {
         return;
       }
 
-      const helper: Helper = { ...this._area, highlight: this._state.highlight, index: this._helperIdx++ };
+      let helper: Helper = { ...this._area, highlight: this._state.highlight, index: this._helperIdx++ };
 
       if (helper.width < 0) {
         helper.startX += helper.width;
@@ -722,7 +722,7 @@ export class Feedback {
   }
 
   private _createHelper(helper: Helper): HTMLDivElement {
-    const h = document.createElement('div');
+    let h = document.createElement('div');
     h.className = helper.highlight ? 'highlight' : 'blackout';
     h.style.position = 'absolute';
     h.style.top = `${helper.startY}px`;
@@ -732,12 +732,12 @@ export class Feedback {
     h.style.zIndex = '20';
     h.setAttribute('idx', `${helper.index}`);
 
-    const inner = document.createElement('div');
+    let inner = document.createElement('div');
     inner.style.width = `${helper.width - 2}px`;
     inner.style.height = `${helper.height - 2}px`;
     inner.style.margin = '1px';
 
-    const removeButton = document.createElement('button');
+    let removeButton = document.createElement('button');
     removeButton.innerText = this._options.texts.remove;
     removeButton.style.position = 'absolute';
     removeButton.style.right = '0';
@@ -840,7 +840,7 @@ export class Feedback {
         return;
       }
 
-      const helper: Helper = { ...this._highlightedArea, highlight: this._state.highlight, index: this._helperIdx++ };
+      let helper: Helper = { ...this._highlightedArea, highlight: this._state.highlight, index: this._helperIdx++ };
 
       if (helper.width < 0) {
         helper.startX += helper.width;
@@ -868,7 +868,7 @@ export class Feedback {
   }
 
   private _showSending() {
-    const container = document.createElement('div');
+    let container = document.createElement('div');
     container.className = 'status';
     container.innerText = this._options.texts.sending;
     this._sendingContainer = container;
@@ -878,15 +878,15 @@ export class Feedback {
 
   private _showSent() {
     this._formContainer.removeChild(this._sendingContainer);
-    const container = document.createElement('div');
+    let container = document.createElement('div');
     container.className = 'status';
     container.innerText = this._options.texts.sent;
 
-    const buttonContainer = document.createElement('div');
+    let buttonContainer = document.createElement('div');
     buttonContainer.classList.add(this._options.classes.button);
     buttonContainer.classList.add(this._options.classes.buttonPrimary);
 
-    const button = document.createElement('button');
+    let button = document.createElement('button');
     button.innerText = this._options.texts.ok;
     button.type = 'button';
     button.addEventListener('click', this.close);
@@ -899,18 +899,18 @@ export class Feedback {
 
   private _showError() {
     this._formContainer.removeChild(this._sendingContainer);
-    const container = document.createElement('div');
+    let container = document.createElement('div');
     container.className = 'status';
     container.innerText = this._options.texts.error;
 
-    const actions = document.createElement('div');
+    let actions = document.createElement('div');
     actions.className = 'actions';
 
-    const backButtonContainer = document.createElement('div');
+    let backButtonContainer = document.createElement('div');
     backButtonContainer.classList.add(this._options.classes.button);
     backButtonContainer.classList.add(this._options.classes.buttonPrimary);
 
-    const backButton = document.createElement('button');
+    let backButton = document.createElement('button');
     backButton.innerText = this._options.texts.back;
     backButton.type = 'button';
     backButton.addEventListener('click', () => {
@@ -920,10 +920,10 @@ export class Feedback {
     backButtonContainer.appendChild(backButton);
     actions.appendChild(backButtonContainer);
 
-    const closeButtonContainer = document.createElement('div');
+    let closeButtonContainer = document.createElement('div');
     closeButtonContainer.classList.add(this._options.classes.button);
 
-    const closeButton = document.createElement('button');
+    let closeButton = document.createElement('button');
     closeButton.innerText = this._options.texts.close;
     closeButton.type = 'button';
     closeButton.addEventListener('click', this.close);
