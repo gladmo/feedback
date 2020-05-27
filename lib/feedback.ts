@@ -243,8 +243,8 @@ export class Feedback {
     headers.append('Content-Type', 'application/json');
 
     const data = {
-      description: this._form[0].nodeValue,
-      screenshot: this._screenshotCanvas.toDataURL()
+      message: this._form[0].value,
+      screenshot: document.querySelector('#screenshot').checked?this._screenshotCanvas.toDataURL():"",
     };
 
     fetch(this._options.endpoint, {
