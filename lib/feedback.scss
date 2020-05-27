@@ -1,0 +1,259 @@
+#feedback-js {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  box-sizing: border-box;
+  display: flex;
+  max-height: 100%;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+
+  div.fb-form-container {
+    min-height: 636px;
+    min-width: 360px;
+    max-width: 360px;
+    z-index: 30;
+
+    form, .status {
+      flex-direction: column;
+      box-sizing: border-box;
+      display: flex;
+      align-content: stretch;
+      justify-content: flex-start;
+      align-items: stretch;
+      z-index: 2;
+      border-radius: 2px;
+      box-shadow: rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px, rgba(0, 0, 0, 0.2) 0px 11px 15px -7px;
+      background-color: rgb(250, 250, 250);
+    }
+
+    form {
+      .fb-header {
+        background-color: rgb(96, 125, 139);
+        box-sizing: border-box;
+        color: #fff;
+        height: 56px;
+
+        h1 {
+          color: #fff;
+          float: left;
+          font-style: normal;
+          font-variant: normal;
+          font-weight: 300;
+          font-stretch: normal;
+          font-size: 20px;
+          line-height: 56px;
+          padding: 0px 16px;
+          margin: 0px;
+        }
+      }
+
+      textarea {
+        &::-webkit-input-placeholder,
+        &:-ms-input-placeholder,
+        &::-moz-placeholder {
+          color: rgb(189, 189, 189);
+        }
+
+        font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+        height: 196px;
+        border: none;
+        box-sizing: border-box;
+        box-shadow: none;
+        color: rgb(33, 33, 33);
+        flex-grow: 1;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 400;
+        font-stretch: normal;
+        font-size: 16px;
+        line-height: normal;
+        max-width: 100%;
+        outline: none;
+        padding: 18px 16px 0px;
+        resize: none;
+        width: 100%;
+      }
+
+      .fb-checkbox {
+        label {
+          cursor: pointer;
+          align-items: center;
+          display: -webkit-flex;
+          font-style: normal;
+          font-variant: normal;
+          font-weight: 400;
+          font-stretch: normal;
+          font-size: 14px;
+          line-height: 20px;
+          font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+          justify-content: flex-start;
+          padding: 8px 16px 0px 8px;
+          -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+          width: auto;
+        }
+
+        input {
+          display: none;
+        }
+
+        div {
+          background-color: rgba(0, 0, 0, 0);
+          border-radius: 50%;
+          height: 32px;
+          width: 32px;
+          flex-direction: column;
+          box-sizing: border-box;
+          display: flex;
+          max-height: 100%;
+          align-content: center;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+
+      .fb-screenshot {
+        align-items: center;
+        background-color: rgb(238, 238, 238);
+        color: rgb(158, 158, 158);
+        display: -webkit-flex;
+        height: 192px;
+        justify-content: center;
+        margin: 8px 0px 12px;
+        overflow: hidden;
+        position: relative;
+        cursor: pointer;
+
+        canvas {
+          width: auto !important;
+          max-height: 100%;
+        }
+      }
+
+      small {
+        color: rgb(117, 117, 117);
+        display: block;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 400;
+        font-stretch: normal;
+        font-size: 12px;
+        line-height: 1.4;
+        letter-spacing: 0.05px;
+        padding: 0px 16px 12px;
+      }
+
+      .fb-actions {
+        align-items: stretch;
+        border-top: 1px solid rgb(224, 224, 224);
+        box-sizing: border-box;
+        height: 56px;
+        display: -webkit-flex;
+        flex-direction: row-reverse;
+      }
+    }
+
+    .status {
+      height: 56px;
+      padding-left: 8px;
+      flex-direction: row;
+      box-sizing: border-box;
+      display: flex;
+      max-height: 100%;
+      align-content: center;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  canvas.draw-area {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    &.active {
+      cursor: crosshair;
+    }
+  }
+
+  div.fb-draw-options {
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 30;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px, rgba(0, 0, 0, 0.2) 0px 11px 15px -7px;
+    display: -webkit-inline-flex;
+    display: inline-flex;
+    flex-direction: row;
+    height: 56px;
+    min-width: 232px;
+
+    .dragger {
+      height: 100%;
+      background-color: #fff;
+      cursor: move;
+      cursor: -webkit-grab;
+    }
+  }
+
+  div.mat-button {
+    &.primary {
+      color: rgb(66, 133, 244);
+    }
+
+    align-items: center;
+    align-self: stretch;
+    box-sizing: border-box;
+    display: -webkit-inline-flex;
+    min-height: 48px;
+    padding: 0px 8px;
+
+    button {
+      &:hover {
+        background-color: rgb(238, 238, 238);
+      }
+
+      font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+      background-color: transparent;
+      border-color: transparent;
+      border-radius: 2px;
+      box-sizing: border-box;
+      color: inherit;
+      cursor: pointer;
+      font-style: normal;
+      font-variant: normal;
+      font-weight: 500;
+      font-stretch: normal;
+      font-size: 14px;
+      line-height: 20px;
+      height: 36px;
+      margin: 0px;
+      min-width: 64px;
+      opacity: 1;
+      outline: none;
+      padding: 0px 8px;
+      text-transform: uppercase;
+    }
+  }
+
+  .helpers {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    .highlight:hover {
+      div {
+        background-color: rgba(0, 68, 255, .1);
+      }
+    }
+  }
+}

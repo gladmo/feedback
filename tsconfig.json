@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2015",
+    "sourceMap": true,
+    "declaration": true,
+    "outDir": "./dist"
+  },
+  "lib": [
+    "es2017",
+    "dom"
+  ],
+  "include": [
+    "index.ts",
+    "lib/**/*"
+  ]
+}
